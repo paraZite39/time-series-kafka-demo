@@ -47,10 +47,10 @@ def main():
 
             if firstline is True:
                 line1 = next(rdr, None)
-                timestamp, value = line1[0], float(line1[1])
+                timestamp, temp, rain, flow = line1[0], float(line1[1]), float(line1[2]), float(line1[3]), float(line1[4])
                 # Convert csv columns to key value pair
                 result = {}
-                result[timestamp] = value
+                result[timestamp] = [temp, rain, flow]
                 # Convert dict to json as message format
                 jresult = json.dumps(result)
                 firstline = False
