@@ -47,7 +47,7 @@ def main():
 
             if firstline is True:
                 line1 = next(rdr, None)
-                timestamp, temp, rain, flow = line1[0], float(line1[1]), float(line1[2]), float(line1[3]), float(line1[4])
+                timestamp, temp, rain, flow = line1[0], float(line1[1]), float(line1[2]), float(line1[3])
                 # Convert csv columns to key value pair
                 result = {}
                 result[timestamp] = [temp, rain, flow]
@@ -63,9 +63,9 @@ def main():
                 d2 = parse(line[0])
                 diff = ((d2 - d1).total_seconds())/args.speed
                 time.sleep(diff)
-                timestamp, value = line[0], float(line[1])
+                timestamp, temp, rain, flow = line[0], float(line[1]), float(line[2]), float(line[3])
                 result = {}
-                result[timestamp] = value
+                result[timestamp] = [temp, rain, flow]
                 jresult = json.dumps(result)
 
                 producer.produce(topic, key=p_key, value=jresult, callback=acked)
