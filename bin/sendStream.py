@@ -49,10 +49,9 @@ def main():
                 line1 = next(rdr, None)
                 timestamp, temp, rain, flow = line1[0], float(line1[1]), float(line1[2]), float(line1[3])
                 # Convert csv columns to key value pair
-                result = {}
-                result[timestamp] = [temp, rain, flow]
+                result = {'time': timestamp, 'temp': temp, 'rain': rain, 'flow': flow}
                 # Convert dict to json as message format
-                jresult = json.dumps(result)
+                jresult = json.dumps(result).encode('utf-8')
                 firstline = False
 
                 producer.produce(topic, key=p_key, value=jresult, callback=acked)
@@ -64,9 +63,8 @@ def main():
                 diff = ((d2 - d1).total_seconds())/args.speed
                 time.sleep(diff)
                 timestamp, temp, rain, flow = line[0], float(line[1]), float(line[2]), float(line[3])
-                result = {}
-                result[timestamp] = [temp, rain, flow]
-                jresult = json.dumps(result)
+                result = {'time': timestamp, 'temp': temp, 'rain': rain, 'flow': flow}
+                jresult = json.dumps(result).encode('utf-8')
 
                 producer.produce(topic, key=p_key, value=jresult, callback=acked)
 
